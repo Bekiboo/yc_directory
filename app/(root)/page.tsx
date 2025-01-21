@@ -1,3 +1,4 @@
+import { auth } from '@/auth'
 import SearchForm from '@/components/SearchForm'
 import StartupCard, { StartupCardType } from '@/components/StartupCard'
 import { sanityFetch, SanityLive } from '@/lib/live'
@@ -10,6 +11,11 @@ export default async function Home({
 }) {
   const query = (await searchParams).query
   const params = { search: query || null }
+
+  const session = await auth()
+
+  console.log('session', session?.id)
+
   // This ensures to revalidate this page whenever new changes are made
   const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY, params })
 
