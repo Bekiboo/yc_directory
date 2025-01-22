@@ -13,7 +13,7 @@ const StartupCard = ({ post }: { post: StartupCardType }) => {
   const {
     _createdAt,
     views,
-    author,
+    author: { _id: authorId, name: authorName, image: avatar } = {} as Author,
     _id,
     image,
     title,
@@ -32,17 +32,17 @@ const StartupCard = ({ post }: { post: StartupCardType }) => {
 
       <div className="flex-between mt-5 gap-5">
         <div className="flex-1">
-          <Link href={`/user/${author?._id}`}>
-            <p className="text-16-medium line-clamp-1">{author?.name}</p>
+          <Link href={`/user/${authorId}`}>
+            <p className="text-16-medium line-clamp-1">{authorName}</p>
           </Link>
           <Link href={`/startup/${_id}`}>
             <h3 className="text-26-semibold line-clamp-1">{title}</h3>
           </Link>
         </div>
-        <Link href={`/user/${author?._id}`}>
+        <Link href={`/user/${authorId}`}>
           <Image
-            src="https://placehold.co/48x48"
-            alt="placeholder"
+            src={avatar!}
+            alt={authorName!}
             width={48}
             height={48}
             className="rounded-full"
@@ -53,7 +53,7 @@ const StartupCard = ({ post }: { post: StartupCardType }) => {
       <Link href={`/startup/${_id}`}>
         <p className="startup-card_desc">{description}</p>
         <Image
-          src={image || 'https://placehold.co/300x200'}
+          src={image!}
           alt="placeholder"
           className="startup-card_img"
           width={300}
